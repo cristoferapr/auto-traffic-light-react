@@ -6,65 +6,31 @@ library.add(faClock)
 import rigoImage from "../../img/rigo-baby.jpg";
 import { library } from "@fortawesome/fontawesome-svg-core";
 
-const getnum = (cont) => {
-	var num;
-	if (cont >= 9){
-		cont = cont - (9 * Math.floor(cont / 9));
-		num= cont;
-	}else{
-		num= cont;
-	}
-	return num;
-}
-
-const green = (n) => {
-	if (n >=0 && n <3){
-		return " selected";
-	}else{
-		return '';
-	}
-}
-
-const yellow = (n) => {
-	if (n >=3 && n <6){
-		return " selected";
-	}else{
-		return '';
-	}
-}
-
-const red = (n) => {
-	if (n >=6 && n <9){
-		return " selected";
-	}else{
-		return '';
-	}
-}
-
-
 //create your first component
-const Home = () => {
-	const [count, setCount] = useState(0);
+export default class Home extends React.Component{
+	constructor(){
+		super();
+		this.state= {
+			clickedLight: null
+		};
+	}
 
-	useEffect(() => {
-	  setInterval(() => {
-		setCount(prevCount => prevCount + 1);
-	  }, 1000);
-	}, []);  
-	
-	return (
-		<div class="back">
+	render (){
+		let greenExtraClass='';
+		if(this.state.clickedLight == 'green') greenExtraClass = 'selected';
+		let yellowExtraClass='';
+		if(this.state.clickedLight == 'yellow') yellowExtraClass = 'selected';
+		let redExtraClass='';
+		if(this.state.clickedLight == 'red') redExtraClass = 'selected';
+		return <div class="back">
 			<div class="container text-center" id="body">
 					<div class="light-container bg-dark">
-						<div className={"light green" + green(getnum(count))}></div>
+						<div className={"light green " + greenExtraClass} onClick={() => this.setState({ clickedLight: 'green'})}></div>
 						</div>
-					<div class="light-container bg-dark"><div className={"light yellow" + yellow(getnum(count))}></div></div>
-					<div class="light-container bg-dark"><div className={"light red" + red(getnum(count))}></div></div>
+					<div class="light-container bg-dark"><div className={"light yellow " + yellowExtraClass} onClick={() => this.setState({ clickedLight: 'yellow'})}></div></div>
+					<div class="light-container bg-dark"><div className={"light red " + redExtraClass} onClick={() => this.setState({ clickedLight: 'red'})}></div></div>
 			</div>
-            
-
 		</div>
-	);
+	;}
 };
 
-export default Home;
